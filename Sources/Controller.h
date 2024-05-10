@@ -57,19 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 //------------------------------------------------------------------------------------------------------------------------------
 
 @interface Controller : NSObject <ICDeviceBrowserDelegate, ICCameraDeviceDelegate>
-{
-    IBOutlet NSTextView*      _logView;
-    ICDeviceBrowser*          _deviceBrowser;
-    ICCameraDevice*           _camera;
-
-    uint32_t                  _storageID;
-    uint32_t                  _numObjects;
-    uint32_t*                 _objects;
-
-    IBOutlet NSTextField*     _dataSize;
-}
-
-@property(retain)     ICCameraDevice*   camera;
 
 // ICDeviceBrowser delegate methods
 - (void)deviceBrowser:(ICDeviceBrowser*)browser didAddDevice:(ICDevice*)addedDevice moreComing:(BOOL)moreComing;
@@ -77,10 +64,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 // ICDevice and ICCameraDevice delegate methods
 - (void)didRemoveDevice:(ICDevice*)removedDevice;
-- (void)device:(ICDevice*)device didOpenSessionWithError:(NSError*)error;
+- (void)device:(ICDevice*)device didOpenSessionWithError:(NSError * _Nullable)error;
 - (void)deviceDidBecomeReady:(ICCameraDevice*)camera;
-- (void)device:(ICDevice*)device didCloseSessionWithError:(NSError*)error;
-- (void)device:(ICDevice*)device didEncounterError:(NSError*)error;
+- (void)device:(ICDevice*)device didCloseSessionWithError:(NSError * _Nullable)error;
+- (void)device:(ICDevice*)device didEncounterError:(NSError *_Nullable)error;
 - (void)cameraDevice:(ICCameraDevice*)camera didReceivePTPEvent:(NSData*)eventData;
 
 - (IBAction)startStopBrowsing:(id)sender;
@@ -88,8 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)getNumObjects:(id)sender;
 - (IBAction)getObjectHandles:(id)sender;
 - (IBAction)getPartialObject:(id)sender;
-@end
 
-//------------------------------------------------------------------------------------------------------------------------------
+@end
 
 NS_ASSUME_NONNULL_END

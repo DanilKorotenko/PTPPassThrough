@@ -364,8 +364,8 @@
         </menu>
         <customObject id="200202" customClass="Controller">
             <connections>
-                <outlet property="_dataSize" destination="200232" id="200261"/>
-                <outlet property="_logView" destination="196" id="200203"/>
+                <outlet property="dataSize" destination="200232" id="5uZ-Hw-UbX"/>
+                <outlet property="logView" destination="196" id="ozE-gA-eVd"/>
             </connections>
         </customObject>
     </objects>

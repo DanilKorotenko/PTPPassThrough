@@ -51,9 +51,21 @@
 #import "PTPOperationRequest.h"
 #import "Controller.h"
 
-@implementation Controller
+@interface Controller ()
 
-@synthesize camera = _camera;
+@property(strong) IBOutlet NSTextView *logView;
+@property(strong) IBOutlet NSTextField *dataSize;
+
+@property(strong) ICCameraDevice *camera;
+@property(strong) ICDeviceBrowser *deviceBrowser;
+
+@property(readwrite) uint32_t storageID;
+@property(readwrite) uint32_t numObjects;
+@property(readwrite) uint32_t *objects;
+
+@end
+
+@implementation Controller
 
 //-------------------------------------------------------------------------------------------------------------------------- log
 
@@ -61,8 +73,8 @@
 {
     dispatch_async(dispatch_get_main_queue(),
     ^{
-        self->_logView.string = [self->_logView.string stringByAppendingString:str];
-        [self->_logView display];
+        self.logView.string = [self.logView.string stringByAppendingString:str];
+        [self.logView display];
     });
 }
 
@@ -71,10 +83,10 @@
 
 - (void)dumpData:(void*)data length:(int)length comment:(NSString*)comment
 {
-    UInt32	i,
-            j;
+    UInt32 i;
+    UInt32 j;
     UInt8*  p;
-    char	fStr[80];
+    char    fStr[80];
     char*   fStrP;
     NSMutableString*  s = [NSMutableString stringWithFormat:@"\n  %@ [%d bytes]:\n\n", comment, length];
 
@@ -154,10 +166,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
 {
-    [_logView setFont:[NSFont userFixedPitchFontOfSize:10]];
-    _deviceBrowser = [[ICDeviceBrowser alloc] init];
-    _deviceBrowser.delegate = self;
-    _deviceBrowser.browsedDeviceTypeMask = ICDeviceTypeMaskCamera | ICDeviceLocationTypeMaskLocal;
+    [self.logView setFont:[NSFont userFixedPitchFontOfSize:10]];
+    self.deviceBrowser = [[ICDeviceBrowser alloc] init];
+    self.deviceBrowser.delegate = self;
+    self.deviceBrowser.browsedDeviceTypeMask = ICDeviceTypeMaskCamera | ICDeviceLocationTypeMaskLocal;
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
@@ -167,8 +179,8 @@
 
 - (void)applicationWillTerminate: (NSNotification *)notification
 {
-    self.camera = NULL;
-    _deviceBrowser = nil;
+    self.camera = nil;
+    self.deviceBrowser = nil;
 }
 
 #pragma mark -
@@ -289,9 +301,9 @@
             if ( ptpResponse && (ptpResponse.responseCode == PTPResponseCodeOK) && data )
             {
                 uint32_t* temp = (uint32_t*)[data bytes];
-                
-                _storageID = *(++temp);
-                [self log:[NSString stringWithFormat:@"\n_storageID: %d", _storageID]];
+
+                self.storageID = *(++temp);
+                [self log:[NSString stringWithFormat:@"\nstorageID: %d", self.storageID]];
             }
             break;
         }
@@ -300,8 +312,8 @@
         {
             if ( ptpResponse && (ptpResponse.responseCode == PTPResponseCodeOK) )
             {
-                _numObjects = ptpResponse.parameter1;
-                [self log:[NSString stringWithFormat:@"\n_numObjects: %d", _numObjects]];
+                self.numObjects = ptpResponse.parameter1;
+                [self log:[NSString stringWithFormat:@"\nnumObjects: %d", self.numObjects]];
             }
             break;
         }
@@ -313,20 +325,21 @@
                 uint32_t* temp = (uint32_t*)[data bytes];
                 uint32_t  i;
 
-                _numObjects = *temp;
+                self.numObjects = *temp;
 
-                if ( _objects )
+                if ( self.objects )
                 {
-                    free( _objects );
+                    free( self.objects );
+                    self.objects = NULL;
                 }
 
-                _objects = malloc( _numObjects*sizeof(uint32_t) );
-                memcpy( _objects, ++temp, _numObjects*sizeof(uint32_t) );
+                self.objects = malloc( self.numObjects*sizeof(uint32_t) );
+                memcpy( self.objects, ++temp, self.numObjects*sizeof(uint32_t) );
 
-                [self log:[NSString stringWithFormat:@"\n_numObjects: %d", _numObjects]];
-                for ( i = 0; i < _numObjects; ++i )
+                [self log:[NSString stringWithFormat:@"\nnumObjects: %d", self.numObjects]];
+                for ( i = 0; i < self.numObjects; ++i )
                 {
-                    [self log:[NSString stringWithFormat:@"\n  object %d: 0x%08X", i, _objects[i]]];
+                    [self log:[NSString stringWithFormat:@"\n  object %d: 0x%08X", i, self.objects[i]]];
                 }
             }
             break;
@@ -338,15 +351,15 @@
 
 - (IBAction)startStopBrowsing:(id)sender
 {
-    if ( _deviceBrowser.browsing == NO )
+    if ( self.deviceBrowser.browsing == NO )
     {
-        [_deviceBrowser start];
+        [self.deviceBrowser start];
         [self log:@"Looking for a PTP camera...\n"];
         [sender setTitle:@"Stop Browsing"];
     }
     else
     {
-        [_deviceBrowser stop];
+        [self.deviceBrowser stop];
         [self log:@"Stopped looking for a PTP camera.\n"];
         [sender setTitle:@"Start Browsing"];
     }
@@ -371,14 +384,14 @@
 
 - (IBAction)getNumObjects:(id)sender;
 {
-    if ( _storageID )
+    if ( self.storageID )
     {
         NSData*               commandBuffer = NULL;
         PTPOperationRequest*  request       = [[PTPOperationRequest alloc] init];
 
         request.operationCode       = PTPOperationCodeGetNumObjects;
         request.numberOfParameters  = 3;
-        request.parameter1          = _storageID;
+        request.parameter1          = self.storageID;
         request.parameter2          = 0;
         request.parameter3          = 0;
         commandBuffer               = request.commandBuffer;
@@ -394,14 +407,14 @@
 
 - (IBAction)getObjectHandles:(id)sender;
 {
-    if ( _numObjects )
+    if ( self.numObjects )
     {
         NSData*               commandBuffer = NULL;
         PTPOperationRequest*  request       = [[PTPOperationRequest alloc] init];
 
         request.operationCode       = PTPOperationCodeGetObjectHandles;
         request.numberOfParameters  = 3;
-        request.parameter1          = _storageID;
+        request.parameter1          = self.storageID;
         request.parameter2          = 0;
         request.parameter3          = 0;
         commandBuffer               = request.commandBuffer;
@@ -417,16 +430,16 @@
 
 - (IBAction)getPartialObject:(id)sender;
 {
-    if ( _numObjects && _objects )
+    if ( self.numObjects && self.objects )
     {
         NSData*               commandBuffer = NULL;
         PTPOperationRequest*  request       = [[PTPOperationRequest alloc] init];
 
         request.operationCode       = PTPOperationCodeGetPartialObject;
         request.numberOfParameters  = 3;
-        request.parameter1          = _objects[_numObjects-1];  // last object
+        request.parameter1          = self.objects[self.numObjects-1];  // last object
         request.parameter2          = 0;
-        request.parameter3          = [_dataSize intValue];
+        request.parameter3          = [self.dataSize intValue];
         commandBuffer               = request.commandBuffer;
 
         [self log:@"\nSending PTP request:"];
