@@ -82,7 +82,7 @@
     NSMutableString*  s = [NSMutableString stringWithFormat:@"\n  %@ [%ld bytes]:\n\n", comment, length];
 
     p = (UInt8*)data;
-    
+
     for ( i = 0; i < length; i++ )
     {
         if ( (i % 16) == 0 )
@@ -90,8 +90,12 @@
             fStrP = fStr;
             fStrP += snprintf( fStrP, 10, "    %4X:", (unsigned int)i );
         }
+
         if ( (i % 4) == 0 )
+        {
             fStrP += snprintf( fStrP, 2, " " );
+        }
+
         fStrP += snprintf( fStrP, 3, "%02X", (UInt8)(*(p+i)) );
         if ( (i % 16) == 15 )
         {
@@ -99,31 +103,44 @@
             for ( j = i-15; j <= i; j++ )
             {
                 if ( *(p+j) < 32 || *(p+j) > 126 )
+                {
                     fStrP += snprintf( fStrP, 2, "." );
+                }
                 else
+                {
                     fStrP += snprintf( fStrP, 2, "%c", *(p+j) );
+                }
             }
             [s appendFormat:@"%s\n", fStr];
         }
+
         if ( (i % 256) == 255 )
+        {
             [s appendString:@"\n"];
+        }
     }
-    
+
     if ( (i % 16) )
     {
         for ( j = (i % 16); j < 16; j ++ )
         {
             fStrP += snprintf( fStrP, 3, "  " );
             if ( (j % 4) == 0 )
+            {
                 fStrP += snprintf( fStrP, 2, " " );
+            }
         }
         fStrP += snprintf( fStrP, 2, " " );
         for ( j = i - (i % 16 ); j < length; j++ )
         {
             if ( *(p+j) < 32 || *(p+j) > 126 )
+            {
                 fStrP += snprintf( fStrP, 2, "." );
+            }
             else
+            {
                 fStrP += snprintf( fStrP, 2, "%c", *(p+j) );
+            }
         }
         for ( j = (i % 16); j < 16; j ++ )
         {
@@ -131,7 +148,7 @@
         }
         [s appendFormat:@"%s\n", fStr];
     }
-    
+
       [s appendString:@"\n"];
       [self log:s];
 }
@@ -141,7 +158,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
 {
-	[_logView setFont:[NSFont userFixedPitchFontOfSize:10]];
+    [_logView setFont:[NSFont userFixedPitchFontOfSize:10]];
     _deviceBrowser = [[ICDeviceBrowser alloc] init];
     _deviceBrowser.delegate = self;
     _deviceBrowser.browsedDeviceTypeMask = ICDeviceTypeMaskCamera | ICDeviceLocationTypeMaskLocal;
@@ -177,10 +194,10 @@
         if ( [addedDevice.capabilities containsObject:ICCameraDeviceCanAcceptPTPCommands] )
         {
             [self log:[NSString stringWithFormat:@"\nFound a PTP camera '%@'.\n", addedDevice.name]];
-            
+
             self.camera           = (ICCameraDevice*)addedDevice;
             self.camera.delegate  = self;
-            
+
             [self log:[NSString stringWithFormat:@"\nOpening a session on '%@'...\n", self.camera.name]];
             [self.camera requestOpenSession];
         }
@@ -216,9 +233,13 @@
 - (void)device:(ICDevice*)device didOpenSessionWithError:(NSError*)error
 {
     if ( error )
+    {
         [self log:[NSString stringWithFormat:@"\nFailed to open a session on '%@'.\nError:\n", device.name, error]];
+    }
     else
+    {
         [self log:[NSString stringWithFormat:@"\nSession opened on '%@'.\n", device.name]];
+    }
 }
 
 //-------------------------------------------------------------------------------------------------------- deviceDidBecomeReady:
@@ -233,9 +254,13 @@
 - (void)device:(ICDevice*)device didCloseSessionWithError:(NSError*)error
 {
     if ( error )
+    {
         [self log:[NSString stringWithFormat:@"\nFailed to close a session on '%@'.\nError:\n", device.name, error]];
+    }
     else
+    {
         [self log:[NSString stringWithFormat:@"\nSession closed on '%@'.\n", device.name]];
+    }
 }
 
 //---------------------------------------------------------------------------------------------------- device:didEncounterError:
@@ -257,23 +282,24 @@
 // ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ------------------ÑÑÑÑÑÑÑÑÑÑÑÑÑÑ didSendCommand:data:response:error:contextInfo:
 // This delegate method is invoked when "requestSendPTPCommand:..." is completed. Please refer to ICCameraDevice.h file in ImageCaptureCore.framework for more information about how to use the "requestSendPTPCommand:..." method.
 
- - (void)didSendPTPCommand:(NSData*)command inData:(NSData*)data response:(NSData*)response error:(NSError*)error contextInfo:(void*)contextInfo
+ - (void)didSendPTPCommand:(NSData*)command inData:(NSData*)data response:(NSData*)response error:(NSError*)error
+    contextInfo:(void*)contextInfo
  {
-    PTPOperationRequest*  ptpRequest  = (PTPOperationRequest*)contextInfo;
-    PTPOperationResponse* ptpResponse = NULL;
-    
+    PTPOperationRequest     *ptpRequest  = (PTPOperationRequest*)contextInfo;
+    PTPOperationResponse    *ptpResponse = NULL;
+
     if ( ptpRequest )
     {
         [self log:@"\nCompleted request:"];
         [self log:[ptpRequest description]];
     }
-    
+
     if ( data )
     {
         [self log:@"\nReceived data:"];
         [self dumpData:(void*)[data bytes] length:(int)[data length] comment:@"inData"];
     }
-        
+
     if ( response )
     {
         ptpResponse = [[PTPOperationResponse alloc] initWithData:response];
@@ -284,6 +310,7 @@
     switch ( ptpRequest.operationCode )
     {
         case PTPOperationCodeGetStorageIDs:
+        {
             if ( ptpResponse && (ptpResponse.responseCode == PTPResponseCodeOK) && data )
             {
                 uint32_t* temp = (uint32_t*)[data bytes];
@@ -292,36 +319,45 @@
                 [self log:[NSString stringWithFormat:@"\n_storageID: %d", _storageID]];
             }
             break;
-        
+        }
+
         case PTPOperationCodeGetNumObjects:
+        {
             if ( ptpResponse && (ptpResponse.responseCode == PTPResponseCodeOK) )
             {
                 _numObjects = ptpResponse.parameter1;
                 [self log:[NSString stringWithFormat:@"\n_numObjects: %d", _numObjects]];
             }
             break;
-            
+        }
+
         case PTPOperationCodeGetObjectHandles:
+        {
             if ( ptpResponse && (ptpResponse.responseCode == PTPResponseCodeOK) && data )
             {
                 uint32_t* temp = (uint32_t*)[data bytes];
                 uint32_t  i;
-                
+
                 _numObjects = *temp;
-                
+
                 if ( _objects )
+                {
                     free( _objects );
-                    
+                }
+
                 _objects = malloc( _numObjects*sizeof(uint32_t) );
                 memcpy( _objects, ++temp, _numObjects*sizeof(uint32_t) );
-                
+
                 [self log:[NSString stringWithFormat:@"\n_numObjects: %d", _numObjects]];
                 for ( i = 0; i < _numObjects; ++i )
+                {
                     [self log:[NSString stringWithFormat:@"\n  object %d: 0x%08X", i, _objects[i]]];
+                }
             }
             break;
+        }
     }
-    
+
     [ptpResponse release];
  }
 
@@ -350,16 +386,17 @@
 {
     NSData*               commandBuffer = NULL;
     PTPOperationRequest*  request       = [[PTPOperationRequest alloc] init];
-    
+
     request.operationCode       = PTPOperationCodeGetStorageIDs;
     request.numberOfParameters  = 0;
     commandBuffer               = request.commandBuffer;
-    
+
     [self log:@"\nSending PTP request:"];
     [self log:[request description]];
 
-    [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
-    
+    [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
+        didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
+
     // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
 }
 
@@ -371,19 +408,20 @@
     {
         NSData*               commandBuffer = NULL;
         PTPOperationRequest*  request       = [[PTPOperationRequest alloc] init];
-        
+
         request.operationCode       = PTPOperationCodeGetNumObjects;
         request.numberOfParameters  = 3;
         request.parameter1          = _storageID;
         request.parameter2          = 0;
         request.parameter3          = 0;
         commandBuffer               = request.commandBuffer;
-        
+
         [self log:@"\nSending PTP request:"];
         [self log:[request description]];
 
-        [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
-        
+        [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
+            didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
+
         // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
     }
 }
@@ -396,19 +434,20 @@
     {
         NSData*               commandBuffer = NULL;
         PTPOperationRequest*  request       = [[PTPOperationRequest alloc] init];
-        
+
         request.operationCode       = PTPOperationCodeGetObjectHandles;
         request.numberOfParameters  = 3;
         request.parameter1          = _storageID;
         request.parameter2          = 0;
         request.parameter3          = 0;
         commandBuffer               = request.commandBuffer;
-        
+
         [self log:@"\nSending PTP request:"];
         [self log:[request description]];
 
-        [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
-        
+        [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
+            didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
+
         // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
     }
 }
@@ -421,19 +460,19 @@
     {
         NSData*               commandBuffer = NULL;
         PTPOperationRequest*  request       = [[PTPOperationRequest alloc] init];
-        
+
         request.operationCode       = PTPOperationCodeGetPartialObject;
         request.numberOfParameters  = 3;
         request.parameter1          = _objects[_numObjects-1];  // last object
         request.parameter2          = 0;
         request.parameter3          = [_dataSize intValue];
         commandBuffer               = request.commandBuffer;
-        
+
         [self log:@"\nSending PTP request:"];
         [self log:[request description]];
 
         [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
-        
+
         // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
     }
 }

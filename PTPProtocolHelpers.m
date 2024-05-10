@@ -223,14 +223,14 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
     if ( ( self = [super init] ) )
     {
         mPrivateData = [[PTPOperationRequestPrivateData alloc] init];
-        
+
         if ( mPrivateData == NULL )
         {
             [self release];
             self = NULL;
         }
     }
-    
+
     return self;
 }
 
@@ -255,18 +255,20 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 - (NSData*)commandBuffer
 {
     int             i;
-	unsigned int    len     = 12 + 4*requestIvars.numberOfParameters;
+    unsigned int    len     = 12 + 4*requestIvars.numberOfParameters;
     unsigned char*  buffer  = (unsigned char*)calloc(len, 1);
     unsigned char*  buf     = buffer;
-    
-	PTPWriteUnsignedInt( &buf, len );
-	PTPWriteUnsignedShort( &buf, 1 );    // command block code
-	PTPWriteUnsignedShort( &buf, requestIvars.operationCode );
-	PTPWriteUnsignedInt( &buf, requestIvars.transactionID );      // ignored by ImageCaptureCore framework
-    
+
+    PTPWriteUnsignedInt( &buf, len );
+    PTPWriteUnsignedShort( &buf, 1 );    // command block code
+    PTPWriteUnsignedShort( &buf, requestIvars.operationCode );
+    PTPWriteUnsignedInt( &buf, requestIvars.transactionID );      // ignored by ImageCaptureCore framework
+
     for ( i = 0; i < requestIvars.numberOfParameters; ++i )
+    {
         PTPWriteUnsignedInt( &buf, requestIvars.parameters[i] );
-        
+    }
+
     return [NSData dataWithBytesNoCopy:buffer length:len freeWhenDone:YES];
 }
 
@@ -353,9 +355,11 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 - (id)initWithData:(NSData*)data
 {
     NSUInteger dataLength = [data length];
-    
+
     if ( ( data == NULL ) || ( dataLength < 12 ) || ( dataLength > 32 ) )
+    {
         return NULL;
+    }
     else
     {
         unsigned char*  buffer  = (unsigned char*)[data bytes];
@@ -363,13 +367,15 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
         unsigned short  type    = CFSwapInt16LittleToHost(*(unsigned short*)(buffer+4));
 
         if ( size < 12 || size > 32 || type != 3 )
+        {
             return NULL;
-        else 
+        }
+        else
         {
             if ( ( self = [super init] ) )
             {
                 mPrivateData = [[PTPOperationResponsePrivateData alloc] init];
-                
+
                 if ( mPrivateData == NULL )
                 {
                     [self release];
@@ -379,16 +385,18 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
                 {
                     unsigned char*  buf = buffer + 6;
                     int             i;
-                    
+
                     responseIvars.responseCode        = PTPReadUnsignedShort( &buf );
                     responseIvars.transactionID       = PTPReadUnsignedInt( &buf );
                     responseIvars.numberOfParameters  = (size-12) >> 2;
-                    
+
                     for ( i = 0; i < responseIvars.numberOfParameters; ++i )
+                    {
                         responseIvars.parameters[i] = PTPReadUnsignedInt( &buf );
+                    }
                 }
             }
-            
+
             return self;
         }
     }
@@ -486,9 +494,11 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 - (id)initWithData:(NSData*)data
 {
     NSUInteger dataLength = [data length];
-    
+
     if ( ( data == NULL ) || ( dataLength < 12 ) || ( dataLength > 24 ) )
+    {
         return NULL;
+    }
     else
     {
         unsigned char*  buffer  = (unsigned char*)[data bytes];
@@ -496,13 +506,15 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
         unsigned short  type    = CFSwapInt16LittleToHost(*(unsigned short*)(buffer+4));
 
         if ( size < 12 || size > 24 || type != 4 )
+        {
             return NULL;
-        else 
+        }
+        else
         {
             if ( ( self = [super init] ) )
             {
                 mPrivateData = [[PTPEventPrivateData alloc] init];
-                
+
                 if ( mPrivateData == NULL )
                 {
                     [self release];
@@ -512,16 +524,18 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
                 {
                     unsigned char*  buf = buffer + 6;
                     int             i;
-                    
+
                     eventIvars.eventCode          = PTPReadUnsignedShort( &buf );
                     eventIvars.transactionID      = PTPReadUnsignedInt( &buf );
                     eventIvars.numberOfParameters = (size-12) >> 2;
-                    
+
                     for ( i = 0; i < eventIvars.numberOfParameters; ++i )
+                    {
                         eventIvars.parameters[i] = PTPReadUnsignedInt( &buf );
+                    }
                 }
             }
-            
+
             return self;
         }
     }
