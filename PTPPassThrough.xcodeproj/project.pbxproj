@@ -14,6 +14,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		DA3C78412BEE2AC700B62A15 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		DA3C78492BEE2C0000B62A15 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C78482BEE2C0000B62A15 /* MainMenu.xib */; };
+		DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		8D1107320486CEB800E47090 /* PTPPassThrough.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PTPPassThrough.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA3C78382BED385700B62A15 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DA3C78482BEE2C0000B62A15 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		DA3C784A2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTPOperationRequestPrivateData.h; sourceTree = "<group>"; };
+		DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTPOperationRequestPrivateData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,8 @@
 				06E17080084F848D005FA3FF /* Controller.h */,
 				06E17081084F848D005FA3FF /* Controller.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				DA3C784A2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.h */,
+				DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				06E17083084F848D005FA3FF /* Controller.m in Sources */,
 				06D377C30E9B1FEE003A350D /* PTPProtocolHelpers.m in Sources */,

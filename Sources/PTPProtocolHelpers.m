@@ -48,7 +48,7 @@
 //------------------------------------------------------------------------------------------------------------------------------
 
 #import "PTPProtocolHelpers.h"
-
+#import "PTPOperationRequestPrivateData.h"
 //------------------------------------------------------------------------------------------------------------------------------
 
 static short
@@ -162,47 +162,6 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
     *(unsigned long long*)(*buf) = CFSwapInt64HostToLittle( value );
     (*buf) += 8;
 }
-
-//----------------------------------------------------------------------------------------------- PTPOperationRequestPrivateData
-
-@interface PTPOperationRequestPrivateData : NSObject
-{
-    unsigned short    mOperationCode;
-    unsigned int      mTransactionID;
-    unsigned short    mNumberOfParameters;
-    unsigned int*     mParameters;
-}
-
-@property   unsigned short  operationCode;
-@property   unsigned int    transactionID;
-@property   unsigned short  numberOfParameters;
-@property   unsigned int*   parameters;
-@end
-
-//------------------------------------------------------------------------------------------------------------------------------
-
-@implementation PTPOperationRequestPrivateData
-@synthesize operationCode       = mOperationCode;
-@synthesize transactionID       = mTransactionID;
-@synthesize numberOfParameters  = mNumberOfParameters;
-@synthesize parameters          = mParameters;
-
-- (id)init
-{
-    if ( ( self = [super init] ) )
-    {
-        mParameters = (unsigned int*)calloc( 5, sizeof( unsigned int ) );
-    }
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    free( mParameters );
-}
-
-@end
 
 //------------------------------------------------------------------------------------------------------------------------------
 
