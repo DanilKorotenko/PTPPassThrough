@@ -157,6 +157,7 @@
             </view>
             <point key="canvasLocation" x="76" y="144"/>
         </window>
+        <customObject id="IEs-1j-doS" customClass="DeviceBrowser"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="PTPPassThrough" id="56">
@@ -333,6 +334,13 @@
                 <menuItem title="Window" id="19">
                     <menu key="submenu" title="Window" systemMenu="window" id="24">
                         <items>
+                            <menuItem title="Show Device Browser" id="8Lg-UT-N3p">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showDeviceBrowser:" target="200202" id="Tr3-hr-bvN"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="wHv-bX-hhs"/>
                             <menuItem title="Minimize" keyEquivalent="m" id="23">
                                 <connections>
                                     <action selector="performMiniaturize:" target="-1" id="37"/>
@@ -361,10 +369,12 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-110" y="-139"/>
         </menu>
         <customObject id="200202" customClass="Controller">
             <connections>
                 <outlet property="dataSize" destination="200232" id="5uZ-Hw-UbX"/>
+                <outlet property="deviceBrowserWindow" destination="IEs-1j-doS" id="a4E-SS-3oh"/>
                 <outlet property="logView" destination="196" id="ozE-gA-eVd"/>
             </connections>
         </customObject>

@@ -16,6 +16,8 @@
 		DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */; };
 		DA3C784F2BEE2E6700B62A15 /* PTPOperationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */; };
 		DA3C78522BEE355D00B62A15 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C78512BEE355D00B62A15 /* Controller.m */; };
+		DA3C78592BEE4B8C00B62A15 /* DeviceBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C78582BEE4B8C00B62A15 /* DeviceBrowser.xib */; };
+		DA3C785A2BEE4B8C00B62A15 /* DeviceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C78572BEE4B8C00B62A15 /* DeviceBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,9 @@
 		DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTPOperationRequest.m; sourceTree = "<group>"; };
 		DA3C78502BEE355D00B62A15 /* Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		DA3C78512BEE355D00B62A15 /* Controller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		DA3C78562BEE4B8C00B62A15 /* DeviceBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceBrowser.h; sourceTree = "<group>"; };
+		DA3C78572BEE4B8C00B62A15 /* DeviceBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceBrowser.m; sourceTree = "<group>"; };
+		DA3C78582BEE4B8C00B62A15 /* DeviceBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceBrowser.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +118,8 @@
 				DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */,
 				06D377C10E9B1FEE003A350D /* PTPProtocolHelpers.h */,
 				06D377C20E9B1FEE003A350D /* PTPProtocolHelpers.m */,
+				DA3C78562BEE4B8C00B62A15 /* DeviceBrowser.h */,
+				DA3C78572BEE4B8C00B62A15 /* DeviceBrowser.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -120,6 +127,7 @@
 		DA3C783E2BEE271400B62A15 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DA3C78582BEE4B8C00B62A15 /* DeviceBrowser.xib */,
 				DA3C78482BEE2C0000B62A15 /* MainMenu.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -179,6 +187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3C78592BEE4B8C00B62A15 /* DeviceBrowser.xib in Resources */,
 				DA3C78412BEE2AC700B62A15 /* InfoPlist.strings in Resources */,
 				DA3C78492BEE2C0000B62A15 /* MainMenu.xib in Resources */,
 			);
@@ -193,6 +202,7 @@
 			files = (
 				DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */,
 				DA3C78522BEE355D00B62A15 /* Controller.m in Sources */,
+				DA3C785A2BEE4B8C00B62A15 /* DeviceBrowser.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				DA3C784F2BEE2E6700B62A15 /* PTPOperationRequest.m in Sources */,
 				06D377C30E9B1FEE003A350D /* PTPProtocolHelpers.m in Sources */,

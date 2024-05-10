@@ -50,11 +50,14 @@
 #import "PTPProtocolHelpers.h"
 #import "PTPOperationRequest.h"
 #import "Controller.h"
+#import "DeviceBrowser.h"
 
 @interface Controller ()
 
 @property(strong) IBOutlet NSTextView *logView;
 @property(strong) IBOutlet NSTextField *dataSize;
+
+@property(strong) IBOutlet DeviceBrowser *deviceBrowserWindow;
 
 @property(strong) ICCameraDevice *camera;
 @property(strong) ICDeviceBrowser *deviceBrowser;
@@ -395,6 +398,11 @@
 }
 
 #pragma mark -
+
+- (IBAction)showDeviceBrowser:(id)sender
+{
+    [self.deviceBrowserWindow showWindow:self];
+}
 
 - (IBAction)startStopBrowsing:(id)sender
 {
