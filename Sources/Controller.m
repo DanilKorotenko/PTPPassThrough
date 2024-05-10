@@ -266,6 +266,53 @@
     [self log:[event description]];
 }
 
+- (void)cameraDevice:(nonnull ICCameraDevice *)camera didAddItems:(nonnull NSArray<ICCameraItem *> *)items
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' Did add items\n", camera.name]];
+}
+
+- (void)cameraDevice:(nonnull ICCameraDevice *)camera didReceiveMetadata:(NSDictionary * _Nullable)metadata
+    forItem:(nonnull ICCameraItem *)item error:(NSError * _Nullable)error
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' didReceiveMetadata\n", camera.name]];
+}
+
+- (void)cameraDevice:(nonnull ICCameraDevice *)camera didReceiveThumbnail:(CGImageRef _Nullable)thumbnail
+    forItem:(nonnull ICCameraItem *)item error:(NSError * _Nullable)error
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' didReceiveThumbnail\n", camera.name]];
+}
+
+- (void)cameraDevice:(nonnull ICCameraDevice *)camera didRemoveItems:(nonnull NSArray<ICCameraItem *> *)items
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' didRemoveItems\n", camera.name]];
+}
+
+- (void)cameraDevice:(nonnull ICCameraDevice *)camera didRenameItems:(nonnull NSArray<ICCameraItem *> *)items
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' didRenameItems\n", camera.name]];
+}
+
+- (void)cameraDeviceDidChangeCapability:(nonnull ICCameraDevice *)camera
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' cameraDeviceDidChangeCapability\n", camera.name]];
+}
+
+- (void)cameraDeviceDidEnableAccessRestriction:(nonnull ICDevice *)device
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' cameraDeviceDidEnableAccessRestriction\n", device.name]];
+}
+
+- (void)cameraDeviceDidRemoveAccessRestriction:(nonnull ICDevice *)device
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' cameraDeviceDidRemoveAccessRestriction\n", device.name]];
+}
+
+- (void)deviceDidBecomeReadyWithCompleteContentCatalog:(nonnull ICCameraDevice *)device
+{
+    [self log:[NSString stringWithFormat:@"\nPTP camera '%@' deviceDidBecomeReadyWithCompleteContentCatalog\n", device.name]];
+}
+
 // ------------------ didSendCommand:data:response:error:contextInfo:
 // This delegate method is invoked when "requestSendPTPCommand:..." is completed. Please refer to ICCameraDevice.h file in ImageCaptureCore.framework for more information about how to use the "requestSendPTPCommand:..." method.
 
