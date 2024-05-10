@@ -51,7 +51,7 @@
 #import "PTPOperationRequest.h"
 #import "Controller.h"
 
-//ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ Controller
+// Controller
 
 @implementation Controller
 
@@ -78,7 +78,7 @@
     UInt8*  p;
     char	fStr[80];
     char*   fStrP;
-    NSMutableString*  s = [NSMutableString stringWithFormat:@"\n  %@ [%ld bytes]:\n\n", comment, length];
+    NSMutableString*  s = [NSMutableString stringWithFormat:@"\n  %@ [%d bytes]:\n\n", comment, length];
 
     p = (UInt8*)data;
 
@@ -278,13 +278,13 @@
     [self log:[event description]];
 }
 
-// ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ------------------ÑÑÑÑÑÑÑÑÑÑÑÑÑÑ didSendCommand:data:response:error:contextInfo:
+// ------------------ didSendCommand:data:response:error:contextInfo:
 // This delegate method is invoked when "requestSendPTPCommand:..." is completed. Please refer to ICCameraDevice.h file in ImageCaptureCore.framework for more information about how to use the "requestSendPTPCommand:..." method.
 
  - (void)didSendPTPCommand:(NSData*)command inData:(NSData*)data response:(NSData*)response error:(NSError*)error
     contextInfo:(void*)contextInfo
- {
-    PTPOperationRequest     *ptpRequest  = (__bridge PTPOperationRequest*)contextInfo;
+{
+    PTPOperationRequest     *ptpRequest  = (PTPOperationRequest*)CFBridgingRelease(contextInfo);
     PTPOperationResponse    *ptpResponse = NULL;
 
     if ( ptpRequest )
@@ -359,7 +359,7 @@
  }
 
 #pragma mark -
-// ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ startStopBrowsing:
+//  startStopBrowsing:
 
 - (IBAction)startStopBrowsing:(id)sender
 {
@@ -377,7 +377,7 @@
     }
 }
 
-// ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ getStorageIDs:
+//  getStorageIDs:
 
 - (IBAction)getStorageIDs:(id)sender;
 {
@@ -393,12 +393,10 @@
 
     [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
         didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
-        contextInfo:(__bridge void * _Nullable)(request)];
-
-    // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
+        contextInfo:(void *)CFBridgingRetain(request)];
 }
 
-// ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ getNumObjects:
+//  getNumObjects:
 
 - (IBAction)getNumObjects:(id)sender;
 {
@@ -419,13 +417,11 @@
 
         [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
             didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
-            contextInfo:(__bridge void * _Nullable)(request)];
-
-        // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
+            contextInfo:(void *)CFBridgingRetain(request)];
     }
 }
 
-// ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ getObjectHandles:
+//  getObjectHandles:
 
 - (IBAction)getObjectHandles:(id)sender;
 {
@@ -446,13 +442,11 @@
 
         [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
             didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
-            contextInfo:(__bridge void * _Nullable)(request)];
-
-        // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
+            contextInfo:(void *)CFBridgingRetain(request)];
     }
 }
 
-// ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ getPartialObject:
+//  getPartialObject:
 
 - (IBAction)getPartialObject:(id)sender;
 {
@@ -473,9 +467,7 @@
 
         [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
             didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
-            contextInfo:(__bridge void * _Nullable)(request)];
-
-        // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
+            contextInfo:(void *)CFBridgingRetain(request)];
     }
 }
 
