@@ -62,13 +62,8 @@
 {
     dispatch_async(dispatch_get_main_queue(),
     ^{
-        int endPos = [[_logView string] length];
-
-        [_logView setSelectedRange:NSMakeRange(endPos,0)];
-        [_logView setEditable:YES];
-        [_logView insertText:str];
-        [_logView setEditable:NO];
-        [_logView display];
+        self->_logView.string = [self->_logView.string stringByAppendingString:str];
+        [self->_logView display];
     });
 }
 
@@ -237,7 +232,7 @@
 {
     if ( error )
     {
-        [self log:[NSString stringWithFormat:@"\nFailed to open a session on '%@'.\nError:\n", device.name, error]];
+        [self log:[NSString stringWithFormat:@"\nFailed to open a session on '%@'.\nError: %@\n", device.name, error]];
     }
     else
     {
@@ -258,7 +253,7 @@
 {
     if ( error )
     {
-        [self log:[NSString stringWithFormat:@"\nFailed to close a session on '%@'.\nError:\n", device.name, error]];
+        [self log:[NSString stringWithFormat:@"\nFailed to close a session on '%@'.\nError: %@\n", device.name, error]];
     }
     else
     {
