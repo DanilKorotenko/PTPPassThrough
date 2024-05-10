@@ -47,9 +47,12 @@
 //
 //------------------------------------------------------------------------------------------------------------------------------
 
+#import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import <ImageCaptureCore/ImageCaptureCore.h>
 #import "PTPEnums.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -58,7 +61,7 @@
     IBOutlet NSTextView*      _logView;
     ICDeviceBrowser*          _deviceBrowser;
     ICCameraDevice*           _camera;
-    
+
     uint32_t                  _storageID;
     uint32_t                  _numObjects;
     uint32_t*                 _objects;
@@ -88,3 +91,5 @@
 @end
 
 //------------------------------------------------------------------------------------------------------------------------------
+
+NS_ASSUME_NONNULL_END

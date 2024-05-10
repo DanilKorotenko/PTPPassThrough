@@ -51,8 +51,6 @@
 #import "PTPOperationRequest.h"
 #import "Controller.h"
 
-// Controller
-
 @implementation Controller
 
 @synthesize camera = _camera;
@@ -153,7 +151,6 @@
 }
 
 #pragma mark -
-//----------------------------------------------------------------------------------------------- applicationDidFinishLaunching:
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
 {
@@ -163,14 +160,10 @@
     _deviceBrowser.browsedDeviceTypeMask = ICDeviceTypeMaskCamera | ICDeviceLocationTypeMaskLocal;
 }
 
-//----------------------------------------------------------------------------- applicationShouldTerminateAfterLastWindowClosed:
-
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     return YES;
 }
-
-//---------------------------------------------------------------------------------------------------- applicationWillTerminate:
 
 - (void)applicationWillTerminate: (NSNotification *)notification
 {
@@ -180,10 +173,6 @@
 
 #pragma mark -
 #pragma mark ICDeviceBrowser delegate methods
-//------------------------------------------------------------------------------------------------------------------------------
-// Please refer to the header files in ImageCaptureCore.framework for documentation about the following delegate methods.
-
-//--------------------------------------------------------------------------------------- deviceBrowser:didAddDevice:moreComing:
 
 - (void)deviceBrowser:(ICDeviceBrowser*)browser didAddDevice:(ICDevice*)addedDevice moreComing:(BOOL)moreComing
 {
@@ -203,8 +192,6 @@
     }
 }
 
-//----------------------------------------------------------------------------------------------- deviceBrowser:didRemoveDevice:
-
 - (void)deviceBrowser:(ICDeviceBrowser*)browser didRemoveDevice:(ICDevice*)removedDevice moreGoing:(BOOL)moreGoing
 {
     if ( self.camera == removedDevice )
@@ -216,7 +203,6 @@
 
 #pragma mark -
 #pragma mark ICDevice & ICCameraDevice delegate methods
-//------------------------------------------------------------------------------------------------------------- didRemoveDevice:
 
 - (void)didRemoveDevice:(ICDevice*)removedDevice
 {
@@ -226,8 +212,6 @@
         self.camera = NULL;
     }
 }
-
-//---------------------------------------------------------------------------------------------- device:didOpenSessionWithError:
 
 - (void)device:(ICDevice*)device didOpenSessionWithError:(NSError*)error
 {
@@ -241,14 +225,10 @@
     }
 }
 
-//-------------------------------------------------------------------------------------------------------- deviceDidBecomeReady:
-
 - (void)deviceDidBecomeReady:(ICCameraDevice*)camera;
 {
     [self log:[NSString stringWithFormat:@"\nPTP camera '%@' is ready.\n", camera.name]];
 }
-
-//--------------------------------------------------------------------------------------------- device:didCloseSessionWithError:
 
 - (void)device:(ICDevice*)device didCloseSessionWithError:(NSError*)error
 {
@@ -262,14 +242,10 @@
     }
 }
 
-//---------------------------------------------------------------------------------------------------- device:didEncounterError:
-
 - (void)device:(ICDevice*)device didEncounterError:(NSError*)error
 {
     [self log:[NSString stringWithFormat:@"\nPTP camera '%@' encountered an error: \n%@\n", device.name, error]];
 }
-
-//--------------------------------------------------------------------------------------------------- device:didReceivePTPEvent:
 
 - (void)cameraDevice:(ICCameraDevice*)camera didReceivePTPEvent:(NSData*)eventData
 {
@@ -356,10 +332,9 @@
             break;
         }
     }
- }
+}
 
 #pragma mark -
-//  startStopBrowsing:
 
 - (IBAction)startStopBrowsing:(id)sender
 {
@@ -377,8 +352,6 @@
     }
 }
 
-//  getStorageIDs:
-
 - (IBAction)getStorageIDs:(id)sender;
 {
     NSData*               commandBuffer = NULL;
@@ -395,8 +368,6 @@
         didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
         contextInfo:(void *)CFBridgingRetain(request)];
 }
-
-//  getNumObjects:
 
 - (IBAction)getNumObjects:(id)sender;
 {
@@ -421,8 +392,6 @@
     }
 }
 
-//  getObjectHandles:
-
 - (IBAction)getObjectHandles:(id)sender;
 {
     if ( _numObjects )
@@ -445,8 +414,6 @@
             contextInfo:(void *)CFBridgingRetain(request)];
     }
 }
-
-//  getPartialObject:
 
 - (IBAction)getPartialObject:(id)sender;
 {
@@ -471,8 +438,4 @@
     }
 }
 
-//------------------------------------------------------------------------------------------------------------------------------
-
 @end
-
-//------------------------------------------------------------------------------------------------------------------------------

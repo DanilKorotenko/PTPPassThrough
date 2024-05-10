@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		06AE180A0E96B5A700869CB8 /* ImageCaptureCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06AE18090E96B5A700869CB8 /* ImageCaptureCore.framework */; };
 		06D377C30E9B1FEE003A350D /* PTPProtocolHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 06D377C20E9B1FEE003A350D /* PTPProtocolHelpers.m */; };
-		06E17083084F848D005FA3FF /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 06E17081084F848D005FA3FF /* Controller.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		DA3C78412BEE2AC700B62A15 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		DA3C78492BEE2C0000B62A15 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C78482BEE2C0000B62A15 /* MainMenu.xib */; };
 		DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */; };
 		DA3C784F2BEE2E6700B62A15 /* PTPOperationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */; };
+		DA3C78522BEE355D00B62A15 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C78512BEE355D00B62A15 /* Controller.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,8 +23,6 @@
 		06D377C00E9B1FE8003A350D /* PTPEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PTPEnums.h; path = Sources/PTPEnums.h; sourceTree = SOURCE_ROOT; };
 		06D377C10E9B1FEE003A350D /* PTPProtocolHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PTPProtocolHelpers.h; path = Sources/PTPProtocolHelpers.h; sourceTree = SOURCE_ROOT; };
 		06D377C20E9B1FEE003A350D /* PTPProtocolHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PTPProtocolHelpers.m; path = Sources/PTPProtocolHelpers.m; sourceTree = SOURCE_ROOT; };
-		06E17080084F848D005FA3FF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = Sources/Controller.h; sourceTree = SOURCE_ROOT; };
-		06E17081084F848D005FA3FF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = Controller.m; path = Sources/Controller.m; sourceTree = SOURCE_ROOT; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -38,6 +36,8 @@
 		DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTPOperationRequestPrivateData.m; sourceTree = "<group>"; };
 		DA3C784D2BEE2E6700B62A15 /* PTPOperationRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTPOperationRequest.h; sourceTree = "<group>"; };
 		DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTPOperationRequest.m; sourceTree = "<group>"; };
+		DA3C78502BEE355D00B62A15 /* Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		DA3C78512BEE355D00B62A15 /* Controller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,16 +103,16 @@
 		DA3C783D2BEE26EA00B62A15 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				06E17080084F848D005FA3FF /* Controller.h */,
-				06E17081084F848D005FA3FF /* Controller.m */,
+				DA3C78502BEE355D00B62A15 /* Controller.h */,
+				DA3C78512BEE355D00B62A15 /* Controller.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				06D377C00E9B1FE8003A350D /* PTPEnums.h */,
+				DA3C784D2BEE2E6700B62A15 /* PTPOperationRequest.h */,
+				DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */,
 				DA3C784A2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.h */,
 				DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */,
 				06D377C10E9B1FEE003A350D /* PTPProtocolHelpers.h */,
 				06D377C20E9B1FEE003A350D /* PTPProtocolHelpers.m */,
-				DA3C784D2BEE2E6700B62A15 /* PTPOperationRequest.h */,
-				DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -192,8 +192,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */,
+				DA3C78522BEE355D00B62A15 /* Controller.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				06E17083084F848D005FA3FF /* Controller.m in Sources */,
 				DA3C784F2BEE2E6700B62A15 /* PTPOperationRequest.m in Sources */,
 				06D377C30E9B1FEE003A350D /* PTPProtocolHelpers.m in Sources */,
 			);
