@@ -51,8 +51,7 @@
 #import "PTPOperationRequestPrivateData.h"
 //------------------------------------------------------------------------------------------------------------------------------
 
-static short
-PTPReadShort( unsigned char** buf )
+short PTPReadShort( unsigned char** buf )
 {
     SInt16 value = (SInt16)CFSwapInt16LittleToHost(*(UInt16*)(*buf));
     (*buf) += 2;
@@ -61,8 +60,7 @@ PTPReadShort( unsigned char** buf )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static void
-PTPWriteShort( unsigned char** buf, short value )
+void PTPWriteShort( unsigned char** buf, short value )
 {
     *(SInt16*)(*buf) = (SInt16)CFSwapInt16HostToLittle( value );
     (*buf) += 2;
@@ -70,8 +68,7 @@ PTPWriteShort( unsigned char** buf, short value )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static unsigned short
-PTPReadUnsignedShort( unsigned char** buf )
+unsigned short PTPReadUnsignedShort( unsigned char** buf )
 {
     unsigned short value = CFSwapInt16LittleToHost(*(unsigned short*)(*buf));
     (*buf) += 2;
@@ -80,8 +77,7 @@ PTPReadUnsignedShort( unsigned char** buf )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static void
-PTPWriteUnsignedShort( unsigned char** buf, unsigned short value )
+void PTPWriteUnsignedShort( unsigned char** buf, unsigned short value )
 {
     *(unsigned short*)(*buf) = CFSwapInt16HostToLittle( value );
     (*buf) += 2;
@@ -89,8 +85,7 @@ PTPWriteUnsignedShort( unsigned char** buf, unsigned short value )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static int
-PTPReadInt( unsigned char** buf )
+int PTPReadInt( unsigned char** buf )
 {
     int value = (int)CFSwapInt32LittleToHost(*(int*)(*buf));
     (*buf) += 4;
@@ -99,8 +94,7 @@ PTPReadInt( unsigned char** buf )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static void
-PTPWriteInt( unsigned char** buf, int value )
+void PTPWriteInt( unsigned char** buf, int value )
 {
     *(int*)(*buf) = (int)CFSwapInt32HostToLittle( value );
     (*buf) += 4;
@@ -108,8 +102,7 @@ PTPWriteInt( unsigned char** buf, int value )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static unsigned int
-PTPReadUnsignedInt( unsigned char** buf )
+unsigned int PTPReadUnsignedInt( unsigned char** buf )
 {
     int value = CFSwapInt32LittleToHost(*(int*)(*buf));
     (*buf) += 4;
@@ -118,8 +111,7 @@ PTPReadUnsignedInt( unsigned char** buf )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static void
-PTPWriteUnsignedInt( unsigned char** buf, unsigned int value )
+void PTPWriteUnsignedInt( unsigned char** buf, unsigned int value )
 {
     *(unsigned int*)(*buf) = CFSwapInt32HostToLittle( value );
     (*buf) += 4;
@@ -127,8 +119,7 @@ PTPWriteUnsignedInt( unsigned char** buf, unsigned int value )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static long long
-PTPReadLongLong( unsigned char** buf )
+long long PTPReadLongLong( unsigned char** buf )
 {
     long long value = (long long)CFSwapInt64LittleToHost(*(long long*)(*buf));
     (*buf) += 8;
@@ -137,8 +128,7 @@ PTPReadLongLong( unsigned char** buf )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static void
-PTPWriteLongLong( unsigned char** buf, long long value )
+void PTPWriteLongLong( unsigned char** buf, long long value )
 {
     *(long long*)(*buf) = (long long)CFSwapInt64HostToLittle( value );
     (*buf) += 8;
@@ -146,8 +136,7 @@ PTPWriteLongLong( unsigned char** buf, long long value )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static unsigned long long
-PTPReadUnsignedLongLong( unsigned char** buf )
+unsigned long long PTPReadUnsignedLongLong( unsigned char** buf )
 {
     unsigned long long value = CFSwapInt64LittleToHost(*(unsigned long long*)(*buf));
     (*buf) += 8;
@@ -156,8 +145,7 @@ PTPReadUnsignedLongLong( unsigned char** buf )
 
 //------------------------------------------------------------------------------------------------------------------------------
 
-static void
-PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
+void PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 {
     *(unsigned long long*)(*buf) = CFSwapInt64HostToLittle( value );
     (*buf) += 8;
@@ -166,88 +154,6 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 //------------------------------------------------------------------------------------------------------------------------------
 
 #define requestIvars ((PTPOperationRequestPrivateData*)mPrivateData)
-
-//---------------------------------------------------------------------------------------------------------- PTPOperationRequest
-
-@implementation PTPOperationRequest
-
-- (id)init
-{
-    if ( ( self = [super init] ) )
-    {
-        mPrivateData = [[PTPOperationRequestPrivateData alloc] init];
-
-        if ( mPrivateData == NULL )
-        {
-            self = nil;
-        }
-    }
-
-    return self;
-}
-
-- (unsigned short)operationCode       { return requestIvars.operationCode; }
-- (unsigned int)transactionID         { return requestIvars.transactionID; }
-- (unsigned short)numberOfParameters  { return requestIvars.numberOfParameters; }
-- (unsigned int)parameter1            { return requestIvars.parameters[0]; }
-- (unsigned int)parameter2            { return requestIvars.parameters[1]; }
-- (unsigned int)parameter3            { return requestIvars.parameters[2]; }
-- (unsigned int)parameter4            { return requestIvars.parameters[3]; }
-- (unsigned int)parameter5            { return requestIvars.parameters[4]; }
-
-- (void)setOperationCode:(unsigned short)code     { requestIvars.operationCode = code; }
-- (void)setTransactionID:(unsigned int)transID    { requestIvars.transactionID = transID; }
-- (void)setNumberOfParameters:(unsigned short)num { requestIvars.numberOfParameters = num; }
-- (void)setParameter1:(unsigned int)param         { requestIvars.parameters[0] = param; }
-- (void)setParameter2:(unsigned int)param         { requestIvars.parameters[1] = param; }
-- (void)setParameter3:(unsigned int)param         { requestIvars.parameters[2] = param; }
-- (void)setParameter4:(unsigned int)param         { requestIvars.parameters[3] = param; }
-- (void)setParameter5:(unsigned int)param         { requestIvars.parameters[4] = param; }
-
-- (NSData*)commandBuffer
-{
-    int             i;
-    unsigned int    len     = 12 + 4*requestIvars.numberOfParameters;
-    unsigned char*  buffer  = (unsigned char*)calloc(len, 1);
-    unsigned char*  buf     = buffer;
-
-    PTPWriteUnsignedInt( &buf, len );
-    PTPWriteUnsignedShort( &buf, 1 );    // command block code
-    PTPWriteUnsignedShort( &buf, requestIvars.operationCode );
-    PTPWriteUnsignedInt( &buf, requestIvars.transactionID );      // ignored by ImageCaptureCore framework
-
-    for ( i = 0; i < requestIvars.numberOfParameters; ++i )
-    {
-        PTPWriteUnsignedInt( &buf, requestIvars.parameters[i] );
-    }
-
-    return [NSData dataWithBytesNoCopy:buffer length:len freeWhenDone:YES];
-}
-
-- (NSString*)description
-{
-    NSMutableString*  s = [NSMutableString stringWithFormat:@"\n%@ <%p>:\n", [self class], self];
-
-    [s appendFormat:@"  operationCode       : 0x%04x\n", requestIvars.operationCode];
-    [s appendFormat:@"  transactionID       : 0x%08x\n", requestIvars.transactionID];
-    [s appendFormat:@"  numberOfParameters  : %d\n", requestIvars.numberOfParameters];
-    if ( requestIvars.numberOfParameters )
-    {
-        int i = 1;
-
-        [s appendFormat:@"  parameters          : 0x%08X\n", requestIvars.parameters[0]];
-        while ( i < requestIvars.numberOfParameters )
-        {
-            [s appendFormat:@"  parameters          : 0x%08X\n", requestIvars.parameters[i]];
-            ++i;
-        }
-    }
-
-    [s appendFormat:@"\n"];
-    return s;
-}
-
-@end
 
 //---------------------------------------------------------------------------------------------- PTPOperationResponsePrivateData
 

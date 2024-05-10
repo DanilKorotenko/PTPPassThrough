@@ -15,6 +15,7 @@
 		DA3C78412BEE2AC700B62A15 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		DA3C78492BEE2C0000B62A15 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C78482BEE2C0000B62A15 /* MainMenu.xib */; };
 		DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */; };
+		DA3C784F2BEE2E6700B62A15 /* PTPOperationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		DA3C78482BEE2C0000B62A15 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		DA3C784A2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTPOperationRequestPrivateData.h; sourceTree = "<group>"; };
 		DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTPOperationRequestPrivateData.m; sourceTree = "<group>"; };
+		DA3C784D2BEE2E6700B62A15 /* PTPOperationRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTPOperationRequest.h; sourceTree = "<group>"; };
+		DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTPOperationRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,14 +103,16 @@
 		DA3C783D2BEE26EA00B62A15 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				06D377C00E9B1FE8003A350D /* PTPEnums.h */,
-				06D377C10E9B1FEE003A350D /* PTPProtocolHelpers.h */,
-				06D377C20E9B1FEE003A350D /* PTPProtocolHelpers.m */,
 				06E17080084F848D005FA3FF /* Controller.h */,
 				06E17081084F848D005FA3FF /* Controller.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				06D377C00E9B1FE8003A350D /* PTPEnums.h */,
 				DA3C784A2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.h */,
 				DA3C784B2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m */,
+				06D377C10E9B1FEE003A350D /* PTPProtocolHelpers.h */,
+				06D377C20E9B1FEE003A350D /* PTPProtocolHelpers.m */,
+				DA3C784D2BEE2E6700B62A15 /* PTPOperationRequest.h */,
+				DA3C784E2BEE2E6700B62A15 /* PTPOperationRequest.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 				DA3C784C2BEE2DAC00B62A15 /* PTPOperationRequestPrivateData.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				06E17083084F848D005FA3FF /* Controller.m in Sources */,
+				DA3C784F2BEE2E6700B62A15 /* PTPOperationRequest.m in Sources */,
 				06D377C30E9B1FEE003A350D /* PTPProtocolHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

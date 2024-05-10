@@ -51,72 +51,23 @@
 
 #import "PTPEnums.h"
 
-//---------------------------------------------------------------------------------------------------------- PTPOperationRequest
-/*! 
-  @class PTPOperationRequest
-  @abstract The OperationRequest object is used to create a PTP operation request.
-*/
+short PTPReadShort( unsigned char** buf );
+void PTPWriteShort( unsigned char** buf, short value );
 
-@interface PTPOperationRequest : NSObject
-{
-@private
-    id mPrivateData;
-}
+unsigned short PTPReadUnsignedShort( unsigned char** buf );
+void PTPWriteUnsignedShort( unsigned char** buf, unsigned short value );
 
-/*! 
-  @property operationCode
-  @abstract PTP operation code.
-*/
-@property(assign)       unsigned short    operationCode;
+int PTPReadInt( unsigned char** buf );
+void PTPWriteInt( unsigned char** buf, int value );
 
-/*! 
-  @property transactionID
-  @abstract PTP transaction ID. Image Capture Core framework ignores this value since the PTPCamera device module determines this value.
-*/
-@property(assign)       unsigned int      transactionID;
+unsigned int PTPReadUnsignedInt( unsigned char** buf );
+void PTPWriteUnsignedInt( unsigned char** buf, unsigned int value );
 
-/*! 
-  @property numberOfParameters
-  @abstract Number of parameters to be sent to the device. This cannot be greater than 5.
-*/
-@property(assign)       unsigned short    numberOfParameters;
+long long PTPReadLongLong( unsigned char** buf );
+void PTPWriteLongLong( unsigned char** buf, long long value );
 
-/*! 
-  @property parameter1
-  @abstract Parameter 1.
-*/
-@property(assign)       unsigned int      parameter1;
-
-/*! 
-  @property parameter2
-  @abstract Parameter 2.
-*/
-@property(assign)       unsigned int      parameter2;
-
-/*! 
-  @property parameter3
-  @abstract Parameter 3.
-*/
-@property(assign)       unsigned int      parameter3;
-
-/*! 
-  @property parameter4
-  @abstract Parameter 4.
-*/
-@property(assign)       unsigned int      parameter4;
-
-/*! 
-  @property parameter5
-  @abstract Parameter 5.
-*/
-@property(assign)       unsigned int      parameter5;
-
-/*! 
-  @property commandBuffer
-  @abstract A serialized buffer intended to be used with -requestSendPTPCommand:... method of ICCameraDevice object.
-*/
-@property(readonly)     NSData*           commandBuffer;
-@end
+unsigned long long PTPReadUnsignedLongLong( unsigned char** buf );
+void PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value );
 
 //--------------------------------------------------------------------------------------------------------- PTPOperationResponse
 /*! 

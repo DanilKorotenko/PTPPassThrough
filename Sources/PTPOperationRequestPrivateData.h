@@ -12,17 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 //----------------------------------------------------------------------------------------------- PTPOperationRequestPrivateData
 
 @interface PTPOperationRequestPrivateData : NSObject
-{
-    unsigned short    mOperationCode;
-    unsigned int      mTransactionID;
-    unsigned short    mNumberOfParameters;
-    unsigned int*     mParameters;
-}
 
-@property   unsigned short  operationCode;
-@property   unsigned int    transactionID;
-@property   unsigned short  numberOfParameters;
-@property   unsigned int*   parameters;
+@property(readwrite)   unsigned short  operationCode;
+@property(readwrite)   unsigned int    transactionID;
+@property(readwrite)   unsigned short  numberOfParameters;
+@property(readwrite)   unsigned int*   parameters;
 @end
 
 NS_ASSUME_NONNULL_END
