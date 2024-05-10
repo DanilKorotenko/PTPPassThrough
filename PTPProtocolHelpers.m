@@ -200,14 +200,8 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 - (void)dealloc
 {
     free( mParameters );
-    [super dealloc];
 }
 
-- (void)finalize
-{
-    free( mParameters );
-    [super finalize];
-}
 @end
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -226,8 +220,7 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 
         if ( mPrivateData == NULL )
         {
-            [self release];
-            self = NULL;
+            self = nil;
         }
     }
 
@@ -334,14 +327,8 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 - (void)dealloc
 {
     free( mParameters );
-    [super dealloc];
 }
 
-- (void)finalize
-{
-    free( mParameters );
-    [super finalize];
-}
 @end
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -378,8 +365,7 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 
                 if ( mPrivateData == NULL )
                 {
-                    [self release];
-                    self = NULL;
+                    self = nil;
                 }
                 else
                 {
@@ -473,14 +459,8 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 - (void)dealloc
 {
     free( mParameters );
-    [super dealloc];
 }
 
-- (void)finalize
-{
-    free( mParameters );
-    [super finalize];
-}
 @end
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -517,8 +497,7 @@ PTPWriteUnsignedLongLong( unsigned char** buf, unsigned long long value )
 
                 if ( mPrivateData == NULL )
                 {
-                    [self release];
-                    self = NULL;
+                    self = nil;
                 }
                 else
                 {

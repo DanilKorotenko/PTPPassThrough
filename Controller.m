@@ -60,13 +60,16 @@
 
 - (void)log:(NSString*)str
 {
-    int endPos = [[_logView string] length];
+    dispatch_async(dispatch_get_main_queue(),
+    ^{
+        int endPos = [[_logView string] length];
 
-    [_logView setSelectedRange:NSMakeRange(endPos,0)];
-    [_logView setEditable:YES];
-    [_logView insertText:str];
-    [_logView setEditable:NO];
-    [_logView display];
+        [_logView setSelectedRange:NSMakeRange(endPos,0)];
+        [_logView setEditable:YES];
+        [_logView insertText:str];
+        [_logView setEditable:NO];
+        [_logView display];
+    });
 }
 
 //----------------------------------------------------------------------------------------------------- dumpData:length:comment:
@@ -176,7 +179,7 @@
 - (void)applicationWillTerminate: (NSNotification *)notification
 {
     self.camera = NULL;
-    [_deviceBrowser release];
+    _deviceBrowser = nil;
 }
 
 #pragma mark -
@@ -285,7 +288,7 @@
  - (void)didSendPTPCommand:(NSData*)command inData:(NSData*)data response:(NSData*)response error:(NSError*)error
     contextInfo:(void*)contextInfo
  {
-    PTPOperationRequest     *ptpRequest  = (PTPOperationRequest*)contextInfo;
+    PTPOperationRequest     *ptpRequest  = (__bridge PTPOperationRequest*)contextInfo;
     PTPOperationResponse    *ptpResponse = NULL;
 
     if ( ptpRequest )
@@ -357,8 +360,6 @@
             break;
         }
     }
-
-    [ptpResponse release];
  }
 
 #pragma mark -
@@ -395,7 +396,8 @@
     [self log:[request description]];
 
     [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
-        didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
+        didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
+        contextInfo:(__bridge void * _Nullable)(request)];
 
     // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
 }
@@ -420,7 +422,8 @@
         [self log:[request description]];
 
         [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
-            didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
+            didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
+            contextInfo:(__bridge void * _Nullable)(request)];
 
         // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
     }
@@ -446,7 +449,8 @@
         [self log:[request description]];
 
         [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
-            didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
+            didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
+            contextInfo:(__bridge void * _Nullable)(request)];
 
         // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
     }
@@ -471,7 +475,9 @@
         [self log:@"\nSending PTP request:"];
         [self log:[request description]];
 
-        [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:) contextInfo:request];
+        [self.camera requestSendPTPCommand:commandBuffer outData:NULL sendCommandDelegate:self
+            didSendCommandSelector:@selector(didSendPTPCommand:inData:response:error:contextInfo:)
+            contextInfo:(__bridge void * _Nullable)(request)];
 
         // Note: request is released in the 'didSendPTPCommand:inData:response:error:contextInfo:' method
     }
